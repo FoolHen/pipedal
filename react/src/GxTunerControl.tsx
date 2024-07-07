@@ -181,7 +181,8 @@ const GxTunerControl =
                         hz = -1;
                         midiNote = -1;
                     } else {
-                        midiNote = Math.log2(hz/refFrequency)*12 + aOffset;
+                        hz = value
+                        midiNote = Math.log2(hz/refFrequency)*tet + aOffset;
                     }
                 }
 
