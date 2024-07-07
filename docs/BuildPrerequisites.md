@@ -23,7 +23,7 @@ Run the following commands to install dependent libraries required by the PiPeda
 
     sudo apt update
     sudo apt install -y liblilv-dev libboost-dev jackd2 libjack-jackd2-dev libnl-3-dev libnl-genl-3-dev libsystemd-dev catch
-    sudo apt install -y libasound2-dev jackd2 uuid-dev
+    sudo apt install -y libasound2-dev jackd2 uuid-dev libxrandr-dev
     sudo apt install -y libwebsocketpp-dev authbind
     sudo apt install -y libavahi-client-dev
 
