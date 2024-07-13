@@ -27,12 +27,12 @@ import SplitControlView from './SplitControlView';
 import Typography from '@mui/material/Typography';
 import IControlViewFactory from './IControlViewFactory';
 import { GxTunerViewFactory } from './GxTunerView';
-
+import ToobMLViewFactory from './ToobMLView';
 
 let pluginFactories: IControlViewFactory[] = [
     new GxTunerViewFactory(),
+    new ToobMLViewFactory(),
 ];
-
 
 export function GetControlView(pedalboardItem?: PedalboardItem | null): React.ReactNode {
     let model: PiPedalModel = PiPedalModelFactory.getInstance();
