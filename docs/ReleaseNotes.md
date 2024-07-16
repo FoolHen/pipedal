@@ -1,8 +1,22 @@
 # Release Notes
+
+## PiPedal 1.1.32
+
+New features:
+
+- 149 new ToobML presets
+
+Bug fixes:
+
+- Fix bypass not updating audio when triggering it with midi signal (https://github.com/rerdavies/pipedal/issues/146)
+- Fix tuner not displaying the notes in the UI (issue was introduced in a commit that is not in the latest release)
+- Fix white background in the banks managing screen in dark mode, making letter not legible
+- Fix ToobML gain control not showing as disabled in the UI for presets that do not use gain (#3 )
+- Fix some errors in docs and debug setup config
+
 ## PiPedal 1.1.31
 
 - Use system preferences for dark mode when connecting from Android app.
-- 
 
 ## PiPedal 1.1.29
 
