@@ -14,6 +14,8 @@
 @prefix param:   <http://lv2plug.in/ns/ext/parameters#> .
 @prefix work:  <http://lv2plug.in/ns/ext/worker#> .
 @prefix pg:      <http://lv2plug.in/ns/ext/port-groups#> .
+@prefix pipedal_ui: <http://github.com/rerdavies/pipedal/ui#> .
+@prefix toob: <http://two-play.com/plugins/toob#> .
 
 @prefix atom: <http://lv2plug.in/ns/ext/atom#> .
 @prefix patch: <http://lv2plug.in/ns/ext/patch#> .
@@ -60,11 +62,19 @@ toobml:sagGroup
 The TooB ML Amplifier plugin provides emulation of a variety of amplifiers and overdrive pedals that are implemented 
 using neural-network-based machine learning models of real amplifiers.
 
-Generally, TooB ML uses smaller and more efficient neural networks than does TooB Neural Amp Modeller. As a result,
-TooB ML models use significantly less CPU, although TooB Neural Amp Modeller is significantly more flexible, and
-has a huge number of downloadable models.
+Toob ML uses a different neural networks than does TooB Neural Amp Modeller. Feather presets are smaller and more efficient
+(around 15% CPU usage on a RPi 4) while the rest are comparable to Neural Amp Modeller (~40% CPU). However, TooB Neural Amp
+Modeller is significantly more flexible, and has a huge number of downloadable models. They preset are represented with
+the following prefixes:
 
-The BluesJR model has an additional Gain control the is used by the BluesJR model to simulate the effect of Blues Junior's gain control.
+[f]: Feather model.
+[A]: Amplifier.
+[P]: Pedal.
+
+Additionally, some models can simulate the control or a specific real knob, which is controlled in the plugin by the gain
+control. These models are represented in the preset names by the following prefix:
+
+[K]: Knob preset, followed by the type of knob it simulates.
 
 For convenience, tone controls are provided for rough shaping of tone before the input signal is fed to the neural net models. The tone 
 section can be completely bypassed by setting all tone controls to exactly 0.5.
@@ -85,7 +95,7 @@ they ordinarily would); and Sag Out models the effect of transformer sag on the 
 
 
 The TooB ML Amplifier is based heavily on code ported from from the RTNeural project (https://github.com/jatinchowdhury18/RTNeural), by Jatin Chowdhury,
-and uses model files from the GuitarML Neural Pi project (https://github.com/GuitarML/NeuralPi).
+and uses model files from the GuitarML Neural Pi and Proteus projects (https://guitarml.com/tonelibrary/tonelib-pro.html).
 
 """ ;
 
@@ -132,140 +142,736 @@ and uses model files from the GuitarML Neural Pi project (https://github.com/Gui
                 lv2:name "Model" ;
                 lv2:default 0.0 ; 
                 lv2:minimum 0.0 ;
-                lv2:maximum 32.0 ;
+                lv2:maximum 181.0 ;
                 lv2:portProperty lv2:enumeration ;
                 lv2:scalePoint 
                 [
-                rdfs:label "BluesJR";
+                rdfs:label "[f][A]Blues JR [K]Gain";
                 rdf:value 0.0
                 ],
                 [
-                rdfs:label "BluesJR FullD";
+                rdfs:label "[f][A]Blues JR FullD";
                 rdf:value 1.0
                 ],
                 [
-                rdfs:label "BossDistortionDs1 highGain";
+                rdfs:label "[f][P]Boss Distortion Ds1 highGain";
                 rdf:value 2.0
                 ],
                 [
-                rdfs:label "BossMetalZoneMt2 highGain";
+                rdfs:label "[f][P]Boss Metal Zone Mt2 highGain";
                 rdf:value 3.0
                 ],
                 [
-                rdfs:label "DumbleClone clean";
+                rdfs:label "[f][P]Dumble Clone clean";
                 rdf:value 4.0
                 ],
                 [
-                rdfs:label "DumbleClone highGain";
+                rdfs:label "[f][P]Dumble Clone highGain";
                 rdf:value 5.0
                 ],
                 [
-                rdfs:label "DumbleClone medGain";
+                rdfs:label "[f][P]Dumble Clone medGain";
                 rdf:value 6.0
                 ],
                 [
-                rdfs:label "EH CockFight highDrive";
+                rdfs:label "[f][P]EH Cock Fight highDrive";
                 rdf:value 7.0
                 ],
                 [
-                rdfs:label "FenderPrinceton clean";
+                rdfs:label "[f][A]Fender Princeton clean";
                 rdf:value 8.0
                 ],
                 [
-                rdfs:label "FenderPrinceton highLevel";
+                rdfs:label "[f][A]Fender Princeton highLevel";
                 rdf:value 9.0
                 ],
                 [
-                rdfs:label "Goat DistortionGen highDist";
+                rdfs:label "[f][P]Goat DistortionGen highDist";
                 rdf:value 10.0
                 ],
                 [
-                rdfs:label "Goat DistortionGen lowDist";
+                rdfs:label "[f][P]Goat Distortion Gen lowDist";
                 rdf:value 11.0
                 ],
                 [
-                rdfs:label "HT40 Overdrive";
+                rdfs:label "[f]HT40 Overdrive [K]";
                 rdf:value 12.0
                 ],
                 [
-                rdfs:label "LittleBigMuff";
+                rdfs:label "[f][P]LittleBigMuff";
                 rdf:value 13.0
                 ],
                 [
-                rdfs:label "MIAudio Crunchbox highGain";
+                rdfs:label "[f][P]MI Audio Crunchbox highGain";
                 rdf:value 14.0
                 ],
                 [
-                rdfs:label "MIAudio Crunchbox midGain";
+                rdfs:label "[f][P]MI Audio Crunchbox midGain";
                 rdf:value 15.0
                 ],
                 [
-                rdfs:label "MesaBoogieMk2b Clean";
+                rdfs:label "[f][A]Mesa Boogie Mk2b Clean";
                 rdf:value 16.0
                 ],
                 [
-                rdfs:label "MesaBoogieMk2b Crunch";
+                rdfs:label "[f][A]Mesa Boogie Mk2b Crunch";
                 rdf:value 17.0
                 ],
                 [
-                rdfs:label "MesaBoogieMk2b highGain";
+                rdfs:label "[f][A]Mesa Boogie Mk2b highGain";
                 rdf:value 18.0
                 ],
                 [
-                rdfs:label "MesaBoogie Studio22 Clean";
+                rdfs:label "[f][A]Mesa Boogie Studio22 Clean";
                 rdf:value 19.0
                 ],
                 [
-                rdfs:label "MesaBoogie Studio22 highGain";
+                rdfs:label "[f][A]Mesa Boogie Studio22 highGain";
                 rdf:value 20.0
                 ],
                 [
-                rdfs:label "PAiA AxeGrinder highDist";
+                rdfs:label "[f][P]PAiA Axe Grinder highDist";
                 rdf:value 21.0
                 ],
                 [
-                rdfs:label "ProCoRat";
+                rdfs:label "[f][P]ProCo Rat";
                 rdf:value 22.0
                 ],
                 [
-                rdfs:label "RockmanXPR Clean";
+                rdfs:label "[f][A]Rockman XPR Clean";
                 rdf:value 23.0
                 ],
                 [
-                rdfs:label "RockmanXPR Distortion";
+                rdfs:label "[f][A]Rockman XPR Distortion";
                 rdf:value 24.0
                 ],
                 [
-                rdfs:label "Rockman Acoustic";
+                rdfs:label "[f][P]Rockman Acoustic";
                 rdf:value 25.0
                 ],
                 [
-                rdfs:label "Rockman Ultimatum highGain";
+                rdfs:label "[f][P]Rockman Ultimatum highGain";
                 rdf:value 26.0
                 ],
                 [
-                rdfs:label "Soldano crunch";
+                rdfs:label "[f][A]Soldano crunch";
                 rdf:value 27.0
                 ],
                 [
-                rdfs:label "Soldano highGain";
+                rdfs:label "[f][A]Soldano highGain";
                 rdf:value 28.0
                 ],
                 [
-                rdfs:label "TS9";
+                rdfs:label "[f][P]Ibanez TS9 [K]";
                 rdf:value 29.0
                 ],
                 [
-                rdfs:label "TS9 FullD";
+                rdfs:label "[f][P]Ibanez TS9 FullD";
                 rdf:value 30.0
                 ],
                 [
-                rdfs:label "WamplerTumnus highGain";
+                rdfs:label "[f][P]Wampler Tumnus highGain";
                 rdf:value 31.0
                 ],
                 [
-                rdfs:label "XoticCompSP";
+                rdfs:label "[f][P]Xotic Compressor SP";
                 rdf:value 32.0
+                ],
+                [
+                rdfs:label "[P]1981 Distortion [K]Dist";
+                rdf:value 33.0
+                ],
+                [
+                rdfs:label "[P]Access Virus B Distortion Hard";
+                rdf:value 34.0
+                ],
+                [
+                rdfs:label "[P]Aguilar Agro Bright Bass";
+                rdf:value 35.0
+                ],
+                [
+                rdfs:label "[P]Aguilar Agro Dark Bass";
+                rdf:value 36.0
+                ],
+                [
+                rdfs:label "[P]Aguilar Agro & B7KU-Behemoth Bass";
+                rdf:value 37.0
+                ],
+                [
+                rdfs:label "[P]Barber DD [K]Drive";
+                rdf:value 38.0
+                ],
+                [
+                rdfs:label "[P]Barber GC [K]Gain";
+                rdf:value 39.0
+                ],
+                [
+                rdfs:label "[P]Benson Chimera clone [K]Gain";
+                rdf:value 40.0
+                ],
+                [
+                rdfs:label "[P]BigMuffWicker on";
+                rdf:value 41.0
+                ],
+                [
+                rdfs:label "[P]BlueClipper Clone";
+                rdf:value 42.0
+                ],
+                [
+                rdfs:label "[P]Blues Breaker Clone [K]Gain";
+                rdf:value 43.0
+                ],
+                [
+                rdfs:label "[P]Bogner Ecstasy Blue [K]Gain";
+                rdf:value 44.0
+                ],
+                [
+                rdfs:label "[P]Bogner XTC  Mini [K]Gain";
+                rdf:value 45.0
+                ],
+                [
+                rdfs:label "[P]Boss MT2 HighGain";
+                rdf:value 46.0
+                ],
+                [
+                rdfs:label "[P]Broadcast [K]Gain";
+                rdf:value 47.0
+                ],
+                [
+                rdfs:label "[P]BSIAB II KitPedal [K]Gain";
+                rdf:value 48.0
+                ],
+                [
+                rdfs:label "[P]Colombo Plexi [K]";
+                rdf:value 49.0
+                ],
+                [
+                rdfs:label "[P]Darkglass B7K Ultra Edoardo Napoli";
+                rdf:value 50.0
+                ],
+                [
+                rdfs:label "[P]Digitech DF-7 BigMuff";
+                rdf:value 51.0
+                ],
+                [
+                rdfs:label "[P]Digitech DF-7 DOD250";
+                rdf:value 52.0
+                ],
+                [
+                rdfs:label "[P]Digitech DF-7 DS1";
+                rdf:value 53.0
+                ],
+                [
+                rdfs:label "[P]Digitech DF-7 MetalMaster";
+                rdf:value 54.0
+                ],
+                [
+                rdfs:label "[P]Digitech DF-7 MT2";
+                rdf:value 55.0
+                ],
+                [
+                rdfs:label "[P]Digitech DF-7 Rat";
+                rdf:value 56.0
+                ],
+                [
+                rdfs:label "[P]Digitech DF-7 TS9";
+                rdf:value 57.0
+                ],
+                [
+                rdfs:label "[P]DOD American Metal";
+                rdf:value 58.0
+                ],
+                [
+                rdfs:label "[P]DOD Grunge";
+                rdf:value 59.0
+                ],
+                [
+                rdfs:label "[P]DOD American Metal [K]EQ";
+                rdf:value 60.0
+                ],
+                [
+                rdfs:label "[P]DOD AmericanMetal [K]Gain";
+                rdf:value 61.0
+                ],
+                [
+                rdfs:label "[P]DOD Grunge [K]Gain";
+                rdf:value 62.0
+                ],
+                [
+                rdfs:label "[P]Effectrode Blackbird Classic";
+                rdf:value 63.0
+                ],
+                [
+                rdfs:label "[P]Effectrode Blackbird Clean";
+                rdf:value 64.0
+                ],
+                [
+                rdfs:label "[P]Effectrode Blackbird Creamy";
+                rdf:value 65.0
+                ],
+                [
+                rdfs:label "[P]Effectrode Blackbird Creamy [K]Gain";
+                rdf:value 66.0
+                ],
+                [
+                rdfs:label "[P]Ethos TWE [K]Gain";
+                rdf:value 67.0
+                ],
+                [
+                rdfs:label "[P]FatGeneral Comp";
+                rdf:value 68.0
+                ],
+                [
+                rdfs:label "[P]Friedman SmallBox [K]Gain";
+                rdf:value 69.0
+                ],
+                [
+                rdfs:label "[P]Friedman BEOD [K]Gain";
+                rdf:value 70.0
+                ],
+                [
+                rdfs:label "[P]GoatPedal HighGain";
+                rdf:value 71.0
+                ],
+                [
+                rdfs:label "[P]Guvnor [K]Gain";
+                rdf:value 72.0
+                ],
+                [
+                rdfs:label "[P]Hustle Drive HP";
+                rdf:value 73.0
+                ],
+                [
+                rdfs:label "[P]Hustle Drive HP [K]";
+                rdf:value 74.0
+                ],
+                [
+                rdfs:label "[P]Hustle Drive LP";
+                rdf:value 75.0
+                ],
+                [
+                rdfs:label "[P]Hustle Drive LP [K]";
+                rdf:value 76.0
+                ],
+                [
+                rdfs:label "[P]Ibanez 808 TubeScreamer";
+                rdf:value 77.0
+                ],
+                [
+                rdfs:label "[P]Ibanez Mostortion Clone [K]Gain";
+                rdf:value 78.0
+                ],
+                [
+                rdfs:label "[P]Jeckyl and Hyde [K]Dist";
+                rdf:value 79.0
+                ],
+                [
+                rdfs:label "[P]Jekyl and Hyde [K]OD";
+                rdf:value 80.0
+                ],
+                [
+                rdfs:label "[P]JHS AT [K]Gain";
+                rdf:value 81.0
+                ],
+                [
+                rdfs:label "[P]Joyo American Sound";
+                rdf:value 82.0
+                ],
+                [
+                rdfs:label "[P]Joyo British Sound";
+                rdf:value 83.0
+                ],
+                [
+                rdfs:label "[P]Joyo Extreme Metal";
+                rdf:value 84.0
+                ],
+                [
+                rdfs:label "[P]Joyo Extreme Metal Boost On";
+                rdf:value 85.0
+                ],
+                [
+                rdfs:label "[P]Landgraff [K]Gain";
+                rdf:value 86.0
+                ],
+                [
+                rdfs:label "[P]Lightspeed Clone [K]Gain";
+                rdf:value 87.0
+                ],
+                [
+                rdfs:label "[P]LittleBigMuff HighGain";
+                rdf:value 88.0
+                ],
+                [
+                rdfs:label "[P]Mooer Cali-MkIV [K]Gain";
+                rdf:value 89.0
+                ],
+                [
+                rdfs:label "[P]MXR78 [K]Dist";
+                rdf:value 90.0
+                ],
+                [
+                rdfs:label "[P]Plexi Breed JTM";
+                rdf:value 91.0
+                ],
+                [
+                rdfs:label "[P]Pork Loin LowGain";
+                rdf:value 92.0
+                ],
+                [
+                rdfs:label "[P]Prince Of Tone Clone [K]Boost";
+                rdf:value 93.0
+                ],
+                [
+                rdfs:label "[P]Prince Of Tone Clone [K]Dist";
+                rdf:value 94.0
+                ],
+                [
+                rdfs:label "[P]Prince Of Tone Clone [K]OD";
+                rdf:value 95.0
+                ],
+                [
+                rdfs:label "[P]Proco Rat Pedal HighGain";
+                rdf:value 96.0
+                ],
+                [
+                rdfs:label "[P]Protein Blue [K]Drive";
+                rdf:value 97.0
+                ],
+                [
+                rdfs:label "[P]Protein Green [K]Drive";
+                rdf:value 98.0
+                ],
+                [
+                rdfs:label "[P]Caline Pure Sky";
+                rdf:value 99.0
+                ],
+                [
+                rdfs:label "[P]Caline Pure Sky [K]Gain";
+                rdf:value 100.0
+                ],
+                [
+                rdfs:label "[P]Ratsbane Standard";
+                rdf:value 101.0
+                ],
+                [
+                rdfs:label "[P]Revv G3 [K]Gain";
+                rdf:value 102.0
+                ],
+                [
+                rdfs:label "[P]Revv G4 Red [K]Drive";
+                rdf:value 103.0
+                ],
+                [
+                rdfs:label "[P]Rockman Acoustic";
+                rdf:value 104.0
+                ],
+                [
+                rdfs:label "[P]Supro Bold [K]Drive";
+                rdf:value 105.0
+                ],
+                [
+                rdfs:label "[P]SweetCream";
+                rdf:value 106.0
+                ],
+                [
+                rdfs:label "[P]TRex Mudhoney [K]Gain";
+                rdf:value 107.0
+                ],
+                [
+                rdfs:label "[P]TRex Mudhoney plus Pork Loin HighGain";
+                rdf:value 108.0
+                ],
+                [
+                rdfs:label "[P]TS7 modified HotMode";
+                rdf:value 109.0
+                ],
+                [
+                rdfs:label "[P]TS7 modified TS9Mode";
+                rdf:value 110.0
+                ],
+                [
+                rdfs:label "[P]TS9 [K]Drive";
+                rdf:value 111.0
+                ],
+                [
+                rdfs:label "[P]TS9 HighDrive";
+                rdf:value 112.0
+                ],
+                [
+                rdfs:label "[P]Tubeworks RealTube [K]Drive";
+                rdf:value 113.0
+                ],
+                [
+                rdfs:label "[P]UA RubyKC [K]Boost";
+                rdf:value 114.0
+                ],
+                [
+                rdfs:label "[P]Victory Countess [K]OD";
+                rdf:value 115.0
+                ],
+                [
+                rdfs:label "[P]Wampler Ace Thirty FullGain";
+                rdf:value 116.0
+                ],
+                [
+                rdfs:label "[P]Wampler ThirtySomething15 Boost On";
+                rdf:value 117.0
+                ],
+                [
+                rdfs:label "[P]WildFire Pedal";
+                rdf:value 118.0
+                ],
+                [
+                rdfs:label "[P]WildFire [K]Gain";
+                rdf:value 119.0
+                ],
+                [
+                rdfs:label "[P]XComp Pedal";
+                rdf:value 120.0
+                ],
+                [
+                rdfs:label "[P]XoticBB [K]Gain";
+                rdf:value 121.0
+                ],
+                [
+                rdfs:label "[P]ZenDrive BlackMagic [K]Drive";
+                rdf:value 122.0
+                ],
+                [
+                rdfs:label "[A]Peavey 6505 Plus Red DirectOut";
+                rdf:value 123.0
+                ],
+                [
+                rdfs:label "[A]Bad Cat 50 HighGain DIRECT";
+                rdf:value 124.0
+                ],
+                [
+                rdfs:label "[A]Bad Cat 50 HighGain PREAMP";
+                rdf:value 125.0
+                ],
+                [
+                rdfs:label "[A]Bad Cat 50 MedGain DIRECT";
+                rdf:value 126.0
+                ],
+                [
+                rdfs:label "[A]Bad Cat 50 MedGain PREAMP";
+                rdf:value 127.0
+                ],
+                [
+                rdfs:label "[A]Bass Amp [K]Gain";
+                rdf:value 128.0
+                ],
+                [
+                rdfs:label "[A]Bass Clean [K]Gain";
+                rdf:value 129.0
+                ],
+                [
+                rdfs:label "[A]Bass Dirt [K]Gain";
+                rdf:value 130.0
+                ],
+                [
+                rdfs:label "[A]Bass Rack [K]Gain";
+                rdf:value 131.0
+                ],
+                [
+                rdfs:label "[A]Blackstar HT40 AmpClean";
+                rdf:value 132.0
+                ],
+                [
+                rdfs:label "[A]Blackstar HT40 AmpHighGain";
+                rdf:value 133.0
+                ],
+                [
+                rdfs:label "[A]Blackstar HT40 [K]Gain SM57 mic";
+                rdf:value 134.0
+                ],
+                [
+                rdfs:label "[A]Blues Jr [K]Vol";
+                rdf:value 135.0
+                ],
+                [
+                rdfs:label "[A]Djent [K]Gain";
+                rdf:value 136.0
+                ],
+                [
+                rdfs:label "[A]Dumble Kit HighG DirectOut";
+                rdf:value 137.0
+                ],
+                [
+                rdfs:label "[A]Dumble Kit LowG DirectOut";
+                rdf:value 138.0
+                ],
+                [
+                rdfs:label "[A]ElCoyote Trainwreck Clean";
+                rdf:value 139.0
+                ],
+                [
+                rdfs:label "[A]ElCoyote Trainwreck Crunch";
+                rdf:value 140.0
+                ],
+                [
+                rdfs:label "[A]ENGL E430 Clean EdoardoNapoli";
+                rdf:value 141.0
+                ],
+                [
+                rdfs:label "[A]ENGL E645 Clean EdoardoNapoli";
+                rdf:value 142.0
+                ],
+                [
+                rdfs:label "[A]ENGL Tube Toner E430";
+                rdf:value 143.0
+                ],
+                [
+                rdfs:label "[A]Ethos Lead Chan [K]Gain";
+                rdf:value 144.0
+                ],
+                [
+                rdfs:label "[A]Fender Bassman JC [K]";
+                rdf:value 145.0
+                ],
+                [
+                rdfs:label "[A]Filmosound with cab";
+                rdf:value 146.0
+                ],
+                [
+                rdfs:label "[A]Gibson EH-185 [K]";
+                rdf:value 147.0
+                ],
+                [
+                rdfs:label "[A]H&K BS200FL Clean EdoardoNapoli";
+                rdf:value 148.0
+                ],
+                [
+                rdfs:label "[A]H&K BS200FL Lead EdoardoNapoli";
+                rdf:value 149.0
+                ],
+                [
+                rdfs:label "[A]Matchless SC30 Ch1 DirectOut";
+                rdf:value 150.0
+                ],
+                [
+                rdfs:label "[A]MesaIICplus Drive 8_5 EQ off [K]";
+                rdf:value 151.0
+                ],
+                [
+                rdfs:label "[A]Mesa Mini Rec HighGain DirectOut";
+                rdf:value 152.0
+                ],
+                [
+                rdfs:label "[A]Mesa II C+ DriveKnob DirectOut";
+                rdf:value 153.0
+                ],
+                [
+                rdfs:label "[A]Neural John Clean DirectOut";
+                rdf:value 154.0
+                ],
+                [
+                rdfs:label "[A]Peavey Bandit Chan1 Saturated";
+                rdf:value 155.0
+                ],
+                [
+                rdfs:label "[A]Peavey Bandit Chan2 clean";
+                rdf:value 156.0
+                ],
+                [
+                rdfs:label "[A]Princeton Amp Clean";
+                rdf:value 157.0
+                ],
+                [
+                rdfs:label "[A]PRS Archon Flat [K]Gain";
+                rdf:value 158.0
+                ],
+                [
+                rdfs:label "[A]PRS Archon Camo-flat [K]Gain";
+                rdf:value 159.0
+                ],
+                [
+                rdfs:label "[A]rec Clean [K]Gain";
+                rdf:value 160.0
+                ],
+                [
+                rdfs:label "[A]rec Modern [K]Gain";
+                rdf:value 161.0
+                ],
+                [
+                rdfs:label "[A]rec Vintage [K]Gain";
+                rdf:value 162.0
+                ],
+                [
+                rdfs:label "[A]Rockman XPR HighGain";
+                rdf:value 163.0
+                ],
+                [
+                rdfs:label "[A]ShiftTwin Clean1 PREAMP";
+                rdf:value 164.0
+                ],
+                [
+                rdfs:label "[A]ShiftTwin Clean2 PREAMP";
+                rdf:value 165.0
+                ],
+                [
+                rdfs:label "[A]ShiftTwin Demon PREAMP";
+                rdf:value 166.0
+                ],
+                [
+                rdfs:label "[A]ShiftTwin StampedeDT PREAMP";
+                rdf:value 167.0
+                ],
+                [
+                rdfs:label "[A]SLO Clean [K]Gain";
+                rdf:value 168.0
+                ],
+                [
+                rdfs:label "[A]SLO Crunch [K]Gain";
+                rdf:value 169.0
+                ],
+                [
+                rdfs:label "[A]SLO HighGain [K]Gain";
+                rdf:value 170.0
+                ],
+                [
+                rdfs:label "[A]Sound City 50 LowGain DIRECT";
+                rdf:value 171.0
+                ],
+                [
+                rdfs:label "[A]Sound City 50 ThroneTorcher DIRECT";
+                rdf:value 172.0
+                ],
+                [
+                rdfs:label "[A]Sovtek 50 Clean DIRECT";
+                rdf:value 173.0
+                ],
+                [
+                rdfs:label "[A]Sovtek 50 + Dod FX56B-2 DIRECT";
+                rdf:value 174.0
+                ],
+                [
+                rdfs:label "[A]Sovtek 50 + Dod FX56B DIRECT";
+                rdf:value 175.0
+                ],
+                [
+                rdfs:label "[A]Sovtek 50 MedGain DIRECT";
+                rdf:value 176.0
+                ],
+                [
+                rdfs:label "[A]Sovtek 50 + Stampede DT DIRECT";
+                rdf:value 177.0
+                ],
+                [
+                rdfs:label "[A]Sovtek 50 + Throne Torcher DIRECT";
+                rdf:value 178.0
+                ],
+                [
+                rdfs:label "[A]Splawn OD Fractal FM3 HighGain";
+                rdf:value 179.0
+                ],
+                [
+                rdfs:label "[A]Yamaha T50 HighGain-mid4 DIRECT";
+                rdf:value 180.0
+                ],
+                [
+                rdfs:label "[A]Yamaha T50 HighGain-mid6 DIRECT";
+                rdf:value 181.0
                 ];
                 rdfs:comment "Select neural network model."
         ] ,
@@ -279,7 +885,7 @@ and uses model files from the GuitarML Neural Pi project (https://github.com/Gui
                 lv2:default 3.0 ;
                 lv2:minimum 0.0 ;
                 lv2:maximum 10.0 ;
-                rdfs:comment "Model gain parameter (used by BluesJR model only)"
+                rdfs:comment "Model knob gain parameter (used by models marked with [K])"
         ],  
         [
                 a lv2:InputPort ,
@@ -450,4 +1056,30 @@ and uses model files from the GuitarML Neural Pi project (https://github.com/Gui
     lv2:extensionData uiext:resize ;
     lv2:extensionData uiext:idleInterface;
     lv2:requiredFeature uiext:idleInterface ;
+    patch:writable 
+        <http://two-play.com/plugins/toob#frequencyResponseVector>;
     .
+
+<http://two-play.com/plugins/toob-ml> 
+     pipedal_ui:ui <http://two-play.com/plugins/toob-ml#piPedalUI>.
+
+
+<http://two-play.com/plugins/toob-ml#piPedalUI> 
+    a pipedal_ui:ui ;
+    pipedal_ui:frequencyPlot
+    [
+        lv2:index 5 ; 
+        pg:group toobml:filterGroup ;
+
+        pipedal_ui:patchProperty toob:frequencyResponseVector;
+        pipedal_ui:xLeft 30 ;
+        pipedal_ui:xRight 22050 ;
+        pipedal_ui:yTop 10 ;
+        pipedal_ui:yBottom -35 ;
+        pipedal_ui:xLog 1 ;
+        pipedal_ui:yDb 1 ;
+        pipedal_ui:width 160 ;
+    ]
+    .
+
+
